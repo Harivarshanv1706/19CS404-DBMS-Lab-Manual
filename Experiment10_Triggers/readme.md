@@ -30,8 +30,8 @@ END;
 - Create two tables: `employees` (for storing data) and `employee_log` (for logging the inserts).
 - Write an **AFTER INSERT** trigger on the `employees` table to log the new data into the `employee_log` table.
 
-### program:
-```sql
+### PROGRAM
+```
 CREATE TABLE employees (
     emp_id     NUMBER PRIMARY KEY,
     emp_name   VARCHAR2(100),
@@ -61,9 +61,11 @@ SELECT * FROM employee_log;
 
 ```
 
-**Output:**
-<img width="1040" height="110" alt="image" src="https://github.com/user-attachments/assets/3818070c-c420-4093-b390-ce965cc7783e" />
+## Expected Output:
+- A new entry is added to the `employee_log` table each time a new record is inserted into the `employees` table.
 
+## OUTPUT:
+<img width="1204" height="222" alt="image" src="https://github.com/user-attachments/assets/7c0fea14-1084-4056-bde2-66240925a645" />
 
 ---
 
@@ -72,8 +74,9 @@ SELECT * FROM employee_log;
 - Write a **BEFORE DELETE** trigger on the `sensitive_data` table.
 - Use `RAISE_APPLICATION_ERROR` to prevent deletion and issue a custom error message.
 
-### program:
-```sql
+### PROGRAM
+```
+
 CREATE TABLE sensitive_data (
     data_id    NUMBER PRIMARY KEY,
     data_value VARCHAR2(100)
@@ -92,9 +95,12 @@ INSERT INTO sensitive_data (data_id, data_value) VALUES (1, 'Confidential Info')
 
 DELETE FROM sensitive_data WHERE data_id = 1;
 ```
-**Output:**
-<img width="1214" height="172" alt="image" src="https://github.com/user-attachments/assets/d2c5a1a6-bd86-4a6b-b57c-c086f72cbb09" />
 
+## Expected Output:
+- If an attempt is made to delete a record from `sensitive_data`, an error message is raised, e.g., `ERROR: Deletion not allowed on this table.`
+
+## OUTPUT
+<img width="890" height="180" alt="image" src="https://github.com/user-attachments/assets/9d41e045-d800-4d13-b3fe-ce66008a9fcf" />
 
 ---
 
@@ -103,8 +109,8 @@ DELETE FROM sensitive_data WHERE data_id = 1;
 - Add a `last_modified` column to the `products` table.
 - Write a **BEFORE UPDATE** trigger on the `products` table to set the `last_modified` column to the current timestamp whenever an update occurs.
 
-### program:
-```sql
+### PROGRAM
+```
 CREATE TABLE products (
     product_id     NUMBER PRIMARY KEY,
     product_name   VARCHAR2(100),
@@ -136,8 +142,11 @@ SELECT product_id, product_name, last_modified
 FROM products
 WHERE product_id = 101;
 ```
-**Output:**
-<img width="576" height="139" alt="image" src="https://github.com/user-attachments/assets/498ee4ee-4543-4544-830b-f1fb24e2d432" />
+## Expected Output:
+- The `last_modified` column in the `products` table is updated automatically to the current date and time when any record is updated.
+
+## OUTPUT
+<img width="693" height="240" alt="image" src="https://github.com/user-attachments/assets/a2b45914-1b47-44f1-88c8-6cd6ba683b56" />
 
 ---
 
@@ -146,11 +155,8 @@ WHERE product_id = 101;
 - Create an `audit_log` table with a counter column.
 - Write an **AFTER UPDATE** trigger on the `customer_orders` table to increment the counter in the `audit_log` table every time a record is updated.
 
-**Expected Output:**
-- The `audit_log` table will maintain a count of how many updates have been made to the `customer_orders` table.
-
-### program:
-```sql
+### PROGRAM
+```
 CREATE TABLE customer_orders (
     order_id     NUMBER PRIMARY KEY,
     customer_id  NUMBER,
@@ -179,8 +185,12 @@ WHERE order_id = 1;
 -- Check the update count
 SELECT * FROM audit_log;
 ```
-**ouptut**
-<img width="675" height="157" alt="image" src="https://github.com/user-attachments/assets/cdf5740d-527c-468d-b0b2-8b4926bad955" />
+
+## Expected Output:
+- The `audit_log` table will maintain a count of how many updates have been made to the `customer_orders` table.
+
+## OUTPUT:
+<img width="695" height="239" alt="image" src="https://github.com/user-attachments/assets/7b10a3a0-7665-40d2-a742-4e60c7ea2cc2" />
 
 ---
 
@@ -189,10 +199,7 @@ SELECT * FROM audit_log;
 - Write a **BEFORE INSERT** trigger on the `employees` table to check if the inserted salary meets a specific condition (e.g., salary must be greater than 3000).
 - If the condition is not met, raise an error to prevent the insert.
 
-**Expected Output:**
-- If the inserted salary in the `employees` table is below the condition (e.g., salary < 3000), the insert operation is blocked, and an error message is raised, such as: `ERROR: Salary below minimum threshold.`
-
-### program:
+### PROGRAM
 ```sql
 CREATE TABLE employee (
     emp_id     NUMBER PRIMARY KEY,
@@ -214,8 +221,13 @@ VALUES (1, 'John Doe', 2500);
 INSERT INTO employee (emp_id, emp_name, salary)
 VALUES (2, 'Jane Smith', 4000);
 ```
-**output**
-<img width="1254" height="349" alt="image" src="https://github.com/user-attachments/assets/f89cc7b7-c728-443d-9fa9-daa6b6cb1988" />
+
+## Expected Output:
+- If the inserted salary in the `employees` table is below the condition (e.g., salary < 3000), the insert operation is blocked, and an error message is raised, such as: `ERROR: Salary below minimum threshold.`
+
+## OUTPUT:
+<img width="1402" height="639" alt="image" src="https://github.com/user-attachments/assets/6a4f14a1-6be3-4358-ac78-58bf668b149a" />
+
 
 ## RESULT
 Thus, the PL/SQL trigger programs were written and executed successfully.
